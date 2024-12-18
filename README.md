@@ -1,5 +1,5 @@
 # Book Manager
-This is a demonstration book manager cross platform application created with Avalonia and .NET 9. Application has a home window which shows the list of saved books. Each book's metadata is saved in JSON format inside data directory which is inside 'Documents' directory for the user. Application also has a popup window to add new books and edit existing, the popup allows user to pick book page images. Image paths are stored with book metadata inside JSON. Loading indicator is shown for long run actions.
+This is a demonstration book manager cross platform application created with Avalonia and .NET 9. Application has a home window which shows the list of saved books. Each book's metadata is saved in JSON format inside data directory which is inside 'Documents' directory for the user. Application also has a popup window to add new books and edit existing, the popup allows user to pick book page images. Image paths are stored with book metadata inside JSON. Loading indicator is shown for long running actions.
 
 Screenshot shows main application screen.
 ![Main Screen](docs/screenshot/1.png)
@@ -19,7 +19,7 @@ Screenshot shows popup window for adding and editing book metadata with page ima
 * Dependency Injection
 * File System Handling
 * JSON parsing
-* Separation of Concerns (user of service injected via DI)
+* Separation of Concerns (use of service injected via DI)
 
 # Assumptions
 * Exception handling is not done rigidly due to shortage of time.
