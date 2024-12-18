@@ -9,7 +9,7 @@ Screenshot shows popup window for adding and editing book metadata with page ima
 
 # Tools/Technologies Used
 * Visual Studio Community 2022
-* Avalobia v11
+* Avalonia v11
 * .NET Framework 9
 * Windows 11
 
