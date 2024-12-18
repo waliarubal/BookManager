@@ -1,0 +1,120 @@
+<UserControl
+    x:Class="AvaloniaDemosntration.Views.BookView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:c="using:AvaloniaDemosntration.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:AvaloniaDemosntration.ViewModels"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Design.DataContext>
+        <vm:BookViewModel />
+    </Design.DataContext>
+    <UserControl.Styles>
+        <Style Selector="Label">
+            <Setter Property="Grid.Column" Value="0" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="4, 0" />
+        </Style>
+        <Style Selector="TextBox">
+            <Setter Property="Grid.Column" Value="1" />
+            <Setter Property="Margin" Value="0, 4" />
+        </Style>
+        <Style Selector="MaskedTextBox">
+            <Setter Property="Grid.Column" Value="1" />
+            <Setter Property="Margin" Value="0, 4" />
+        </Style>
+        <Style Selector="TextBox.Multiline">
+            <Setter Property="AcceptsReturn" Value="True" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="Height" Value="80" />
+        </Style>
+        <Style Selector="Grid > StackPanel">
+            <Setter Property="Orientation" Value="Horizontal" />
+            <Setter Property="Grid.Column" Value="1" />
+            <Setter Property="Margin" Value="0, 4" />
+        </Style>
+        <Style Selector="Button">
+            <Setter Property="Margin" Value="0 0 4 0" />
+        </Style>
+        <Style Selector="ListBox">
+            <Setter Property="Grid.ColumnSpan" Value="2" />
+            <Setter Property="Margin" Value="0 0 0 4" />
+        </Style>
+    </UserControl.Styles>
+    <Grid
+        Margin="8"
+        ColumnDefinitions="Auto, *"
+        RowDefinitions="Auto, Auto, Auto, Auto, Auto, *, Auto, Auto">
+        <Label Target="Title">_Title *</Label>
+        <TextBox x:Name="Title" Text="{Binding Book.Title}" />
+
+        <Label Grid.Row="1" Target="Description">_Description</Label>
+        <TextBox
+            x:Name="Description"
+            Grid.Row="1"
+            Classes="Multiline"
+            Text="{Binding Book.Description}" />
+
+        <Label Grid.Row="2" Target="Author">A_uthor</Label>
+        <TextBox
+            x:Name="Author"
+            Grid.Row="2"
+            Text="{Binding Book.Author}" />
+
+        <Label Grid.Row="3" Target="Isbn">_ISBN-13 *</Label>
+        <MaskedTextBox
+            x:Name="Isbn"
+            Grid.Row="3"
+            Mask="000-0-00-000000-0"
+            Text="{Binding Book.Isbn}" />
+
+        <Label Grid.Row="4" Target="Pages">_Pages *</Label>
+        <StackPanel Grid.Row="4">
+            <Button Grid.Row="4" Command="{Binding AddPageCommand}">_Add...</Button>
+            <Button
+                Grid.Row="4"
+                Command="{Binding RemovePageCommand}"
+                CommandParameter="{Binding #Pages.SelectedItem}"
+                IsEnabled="{Binding !!#Pages.SelectedItem}">
+                _Remove Selected
+            </Button>
+        </StackPanel>
+        <ListBox
+            x:Name="Pages"
+            Grid.Row="5"
+            Grid.ColumnSpan="2"
+            ItemsSource="{Binding Book.Pages}">
+            <ListBox.Resources>
+                <c:PathToImageConverter x:Key="PathToImageConverter" />
+            </ListBox.Resources>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Image Source="{Binding, Converter={StaticResource PathToImageConverter}, ConverterParameter=1024}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <StackPanel
+            Grid.Row="6"
+            Grid.Column="0"
+            Grid.ColumnSpan="2">
+            <Button Command="{Binding SaveCommand}">_Save</Button>
+            <Button Command="{Binding ClearCommand}">_Clear</Button>
+            <TextBlock
+                Margin="4,0"
+                VerticalAlignment="Center"
+                Foreground="Red"
+                Text="{Binding Error}" />
+        </StackPanel>
+
+        <ProgressBar
+            Grid.Row="7"
+            Grid.ColumnSpan="2"
+            IsIndeterminate="True"
+            IsVisible="{Binding IsBusy}" />
+    </Grid>
+
+</UserControl>

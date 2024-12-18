@@ -1,0 +1,58 @@
+<UserControl
+    x:Class="AvaloniaDemosntration.Views.BooksView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:v="using:AvaloniaDemosntration.Views"
+    xmlns:vm="using:AvaloniaDemosntration.ViewModels"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.DataContext>
+        <vm:BooksViewModel />
+    </UserControl.DataContext>
+    <Grid RowDefinitions="Auto, *, Auto">
+        <Menu>
+            <MenuItem Header="Books">
+                <MenuItem Command="{Binding RefreshCommand}" Header="Refresh" />
+                <MenuItem Command="{Binding AddCommand}" Header="Add New..." />
+                <MenuItem
+                    Command="{Binding EditCommand}"
+                    CommandParameter="{Binding Book}"
+                    Header="Edit..."
+                    IsEnabled="{Binding !!Book}" />
+                <MenuItem
+                    Command="{Binding RemoveCommand}"
+                    CommandParameter="{Binding Book}"
+                    Header="Delete Selected"
+                    IsEnabled="{Binding !!Book}" />
+            </MenuItem>
+        </Menu>
+        <DataGrid
+            Grid.Row="1"
+            IsReadOnly="True"
+            ItemsSource="{Binding Books}"
+            SelectedItem="{Binding Book}">
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Title}"
+                    Header="Title" />
+                <DataGridTextColumn
+                    Width=".5*"
+                    Binding="{Binding Author}"
+                    Header="Author" />
+                <DataGridTextColumn
+                    Width=".5*"
+                    Binding="{Binding Pages.Count, FallbackValue=0}"
+                    Header="Pages" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <ProgressBar
+            Grid.Row="2"
+            IsIndeterminate="True"
+            IsVisible="{Binding IsBusy}" />
+    </Grid>
+
+</UserControl>
